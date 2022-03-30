@@ -41,6 +41,9 @@
                 </div>
                 <div>
                     <button id="add" type="button" class="btn btn-primary">Add</button>
+                    <button id="auth" type="button" class="btn btn-secondary">Reload All Proxy</button>
+                </div>
+                <div>
                 </div>
             </div>
 
@@ -56,6 +59,9 @@
             return proxies.trim().split("\n");
         }
         const postProxiesURL = location.origin + "/proxies";
+        const getReloadAllProxies = location.origin + "/proxies/reloadAll";
+        // const getReloadNoneProxies = location.origin + "/proxies/reload?type=none";
+
 
         $("#add").click(function(){
             const proxies = splitProxies($("#text").val())
@@ -76,6 +82,12 @@
             });
 
         })
+
+        $("#auth").click(async function(){
+           const data = await axios.get(getReloadAllProxies)
+           console.log(data);
+        })
+       
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"

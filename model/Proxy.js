@@ -23,6 +23,10 @@ let Proxy = new Schema(
     type:{
       type: String,
       default: "none"
+    },
+    fowardPort:{
+      type: Number,
+      default: 0
     }
 }
 );

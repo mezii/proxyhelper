@@ -3,9 +3,23 @@
 var express = require('express');
 var router = express.Router();
 const Proxy = require("../model/Proxy");
+const ProxyChain = require('proxy-chain');
 
 
 const proxyTypeList = ["auth","none"];
+
+router.get("/list" , async (req,res) => {
+    const {type} = req.query;
+    if (proxyTypeList.indexOf(type) < 0) return res.status(400).send("Specific proxies type");
+
+    const proxies = await Proxy.find({type: type});
+    let proxieString = '<pre>'
+    proxies.forEach(proxie => {
+        const {host,port,username,password} = proxie;
+        proxieString += `${host}|${port}|${username}|${password}<pre>`
+    })
+    res.send(proxieString);
+})
 
 router.get("/", async(req,res) => {
     const {type} = req.query;
@@ -42,7 +56,8 @@ router.post("/",async  (req,res,next) => {
       port: props[1],
       username: props[2],
       password: props[3],
-      type: type
+      type: type,
+      fowardPort: 0
     })
     return res.send(newCreatedProxy);
   } 
@@ -50,7 +65,8 @@ router.post("/",async  (req,res,next) => {
     const newCreatedProxy = await Proxy.create({
         host: props[0],
         port: props[1],
-        type: type
+        type: type,
+        fowardPort: 0
     })
     return res.send(newCreatedProxy);
   }
@@ -63,4 +79,56 @@ router.get("/view", async(req,res)=>{
     res.render("proxy",{"title": "Proxy Manager"});
 })
 
+function createProxy(proxy,port){
+ 
+  const server = new ProxyChain.Server({
+      // Port where the server will listen. By default 8000.
+      port: port,
+
+      // Enables verbose logging
+      verbose: true,
+
+      prepareRequestFunction: ({ request, username, password, hostname, port, isHttp, connectionId }) => {
+            let proxyUrl = null;
+            if (proxy.type == "auth"){
+                proxyUrl = `http://${proxy.username}:${proxy.password}@${proxy.host}:${proxy.port}`;
+            }
+            if (proxy.type == "none"){
+                proxyUrl = `http://${proxy.host}:${proxy.port}`;
+            }
+            if (proxyUrl == null) return;
+            return {
+              upstreamProxyUrl: proxyUrl ,
+
+              failMsg: 'Bad username or password, please try again.',
+            };
+      },
+  });
+  server.listen(() => {
+    console.log(`Proxy server is listening on port ${server.port}`);
+  });
+
+}
+async function loadProxies(proxies){
+
+  for (let i = 0; i < proxies.length; i ++){
+    createProxy(proxies[i], 1710 + i);
+    await Proxy.findOneAndUpdate({"_id": proxies[i]._id},{fowardPort: 1710+i})
+  }
+}
+
+router.get("/reload", async(req,res) => {
+    const {type} = req.query;
+    if (proxyTypeList.indexOf(type) < 0) return res.status(400).send("Specific proxies type");
+    const proxies = await Proxy.find({type: type});
+    loadProxies(proxies);
+    return res.send("Reloaded done")
+})
+
+
+router.get("/reloadAll", async(req,res) => {
+    const proxies = await Proxy.find({});
+    await loadProxies(proxies); 
+    return res.send("Reloaded All Done")
+})
 module.exports = router;

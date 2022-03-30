@@ -4,7 +4,6 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const port = process.env.PORT || "8000";
-const ProxyChain = require('proxy-chain');
 const mongoose = require("mongoose");
 
 var indexRouter = require('./routes/index');
@@ -56,36 +55,9 @@ app.use(function(err, req, res, next) {
 });
 // 
 
-const proxies = [];
-const firstPort = 1710;
 
-function createProxy(proxy,port){
 
-  const server = new ProxyChain.Server({
-      // Port where the server will listen. By default 8000.
-      port: port,
 
-      // Enables verbose logging
-      verbose: true,
-
-      prepareRequestFunction: ({ request, username, password, hostname, port, isHttp, connectionId }) => {
-          return {
-              upstreamProxyUrl: `http://${proxy.username}:${proxy.password}@${proxy.host}:${proxy.port}`,
-
-              failMsg: 'Bad username or password, please try again.',
-          };
-      },
-  });
-  server.listen(() => {
-    console.log(`Proxy server is listening on port ${server.port}`);
-  });
-
-}
-function loadProxies(proxies){
-  for (let i = 0; i < proxies.count; i ++){
-    createProxy(proxies[i], 1710 + i);
-  }
-}
 //149.6.162.10:80:yngroup-40:Tung123abc
 
 
