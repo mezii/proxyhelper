@@ -122,7 +122,7 @@ router.get("/reload", async(req,res) => {
     if (proxyTypeList.indexOf(type) < 0) return res.status(400).send("Specific proxies type");
     const proxies = await Proxy.find({type: type});
     loadProxies(proxies);
-    return res.send("Reloaded done")main
+    return res.send("Reloaded done")
 })
 
 
