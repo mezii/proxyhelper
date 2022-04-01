@@ -122,7 +122,7 @@ router.get("/reload", async(req,res) => {
     if (proxyTypeList.indexOf(type) < 0) return res.status(400).send("Specific proxies type");
     const proxies = await Proxy.find({type: type});
     loadProxies(proxies);
-    return res.send("Reloaded done")
+    return res.send("Reloaded done")main
 })
 
 
@@ -139,7 +139,7 @@ router.get("/pac", async(req,res) => {
     res.send(`function FindProxyForURL(url,host){
         if (shExpMatch(host,'icanhazip.com') 
         || shExpMatch(host,'api.textnow.me')
-        ) return '${host}:${port}';
+        ) return 'PROXY ${host}:${port}';
         return "DIRECT";
 }`);
 })
