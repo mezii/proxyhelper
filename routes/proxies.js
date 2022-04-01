@@ -138,8 +138,15 @@ router.get("/pac", async(req,res) => {
 
     res.send(`function FindProxyForURL(url,host){
         if (shExpMatch(host,'icanhazip.com') 
-        || shExpMatch(host,'api.textnow.me')
+        || shExpMatch(host,'textnow')
         || shExpMatch(host,'perimeterx')
+        || shExpMatch(host, 'apple')
+        || shExpMatch(host, 'applovin')
+        || shExpMatch(host, 'applovin')
+        || shExpMatch(host, 'applovin')
+        || shExpMatch(host, 'applovin')
+        || shExpMatch(host, 'applovin')
+
         ) return 'PROXY ${host}:${port}';
         return "DIRECT";
 }`);
