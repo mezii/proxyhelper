@@ -12,6 +12,7 @@ var proxiesRouter = require('./routes/proxies');
 
 var app = express();
 const res = require('express/lib/response');
+const Proxy = require("./model/Proxy");
 
 // view engine setup
 
@@ -34,7 +35,7 @@ app.use('/proxies', proxiesRouter)
 var db = "mongodb://localhost:27017/sockserver";
 
 mongoose.connect(db, { useUnifiedTopology: true, useNewUrlParser: true });
-const connection = mongoose.connection;
+const connection = mongoose.connection; 
 connection.once("open", function() {
   console.log("MongoDB database connection established successfully");
 });
@@ -57,12 +58,14 @@ app.use(function(err, req, res, next) {
 
 
 
-
 //149.6.162.10:80:yngroup-40:Tung123abc
 
 
 
-app.listen(port, () => {
+app.listen(port, async () => {
+  const proxies = await Proxy.find({});
+  await proxiesRouter.loadProxies(proxies); 
+
   console.log(`Listening to requests on http://localhost:${port}`);
 });
 

@@ -109,7 +109,7 @@ function createProxy(proxy,port){
   });
 
 }
-async function loadProxies(proxies){
+router.loadProxies = async function loadProxies(proxies){
 
   for (let i = 0; i < proxies.length; i ++){
     createProxy(proxies[i], 1710 + i);
