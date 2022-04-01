@@ -131,4 +131,17 @@ router.get("/reloadAll", async(req,res) => {
     await loadProxies(proxies); 
     return res.send("Reloaded All Done")
 })
+
+router.get("/pac", async(req,res) => {
+    const {host,port} = req.query;
+    if (!host || !port) return res.send("Invalid configuration");
+
+    res.send(`function FindProxyForURL(url,host){
+        if (shExpMatch(host,'icanhazip.com') 
+        || shExpMatch(host,'api.textnow.me')
+        || shExpMatch(host,'/whatismyipaddress.com/')
+        ) return '${host}:${port}';
+        return "DIRECT";
+}`);
+})
 module.exports = router;
