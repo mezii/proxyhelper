@@ -139,7 +139,6 @@ router.get("/pac", async(req,res) => {
     res.send(`function FindProxyForURL(url,host){
         if (shExpMatch(host,'icanhazip.com') 
         || shExpMatch(host,'api.textnow.me')
-        || shExpMatch(host,'/whatismyipaddress.com/')
         ) return '${host}:${port}';
         return "DIRECT";
 }`);
