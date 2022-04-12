@@ -137,7 +137,13 @@ router.get("/pac", async(req,res) => {
     if (!host || !port) return res.send("Invalid configuration");
 
     res.send(`function FindProxyForURL(url,host){
-      return 'PROXY ${host}:${port}';
+       url = url.toLowerCase();
+       host = host.toLowerCase();
+      if (shExpMatch (url, "*ip-api.com*")){ 
+          return 'PROXY ${host}:${port}';
+      }
+      return 'DIRECT';
+
   }`);
 })
 module.exports = router;
