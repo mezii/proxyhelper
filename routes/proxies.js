@@ -141,11 +141,13 @@ router.get("/pac", async(req,res) => {
         || shExpMatch(host,'textnow')
         || shExpMatch(host,'perimeterx')
         || shExpMatch(host, 'apple')
-        || shExpMatch(host, 'applovin')
-        || shExpMatch(host, 'applovin')
-        || shExpMatch(host, 'applovin')
-        || shExpMatch(host, 'applovin')
-        || shExpMatch(host, 'applovin')
+        || shExpMatch(host, 'leanplum')
+        || shExpMatch(host, 'oath') 
+        || shExpMatch(host, 'emb-api')
+        || shExpMatch(host, 'yahoo')
+        || shExpMatch(host, 'doubleclick')
+        || shExpMatch(host, 'app-measurement')
+        || shExpMatch(host, 'doubleclick')
 
         ) return 'PROXY ${host}:${port}';
         return "DIRECT";
