@@ -133,7 +133,7 @@ router.get("/reloadAll", async(req,res) => {
 })
 
 router.get("/pac", async(req,res) => {
-    const {host,port} = req.query;
+  const {host,port} = req.query;
     if (!host || !port) return res.send("Invalid configuration");
 
     res.send(`function FindProxyForURL(url,host){
@@ -149,7 +149,7 @@ router.get("/pac", async(req,res) => {
         || shExpMatch(host, 'app-measurement')
         || shExpMatch(host, 'doubleclick')
 
-        ) return 'SOCKS ${host}:${port}';
+        ) return 'HTTPS ${host}:${port}';
         return "DIRECT";
 }`);
 })
