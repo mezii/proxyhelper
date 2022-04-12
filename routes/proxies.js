@@ -132,28 +132,28 @@ router.get("/reloadAll", async(req,res) => {
     return res.send("Reloaded All Done")
 })
 
-router.get("/pac", async(req,res) => {
-  const {host,port} = req.query;
-    if (!host || !port) return res.send("Invalid configuration");
+// router.get("/pac", async(req,res) => {
+//   const {host,port} = req.query;
+//     if (!host || !port) return res.send("Invalid configuration");
 
-    res.send(`function FindProxyForURL(url,host){
-        if (dnsDomainIs(host,'api.textnow.me') 
-        || dnsDomainIs(host,'icanhazip.com')
-        || shExpMatch(host,'perimeterx')
-        || shExpMatch(host, 'apple')
-        || shExpMatch(host, 'leanplum')
-        || shExpMatch(host, 'oath') 
-        || shExpMatch(host, 'emb-api')
-        || shExpMatch(host, 'yahoo')
-        || shExpMatch(host, 'doubleclick')
-        || shExpMatch(host, 'app-measurement')
-        || shExpMatch(host, 'doubleclick')
-        || dnsDomainIs(host, '.ip-api.com')
+//     res.send(`function FindProxyForURL(url,host){
+//         if (dnsDomainIs(host,'api.textnow.me') 
+//         || dnsDomainIs(host,'icanhazip.com')
+//         || shExpMatch(host,'perimeterx')
+//         || shExpMatch(host, 'apple')
+//         || shExpMatch(host, 'leanplum')
+//         || shExpMatch(host, 'oath') 
+//         || shExpMatch(host, 'emb-api')
+//         || shExpMatch(host, 'yahoo')
+//         || shExpMatch(host, 'doubleclick')
+//         || shExpMatch(host, 'app-measurement')
+//         || shExpMatch(host, 'doubleclick')
+//         || dnsDomainIs(host, '.ip-api.com')
 
-        ) return 'PROXY ${host}:${port}';
-        return "DIRECT";
-}`);
-})
+//         ) return 'PROXY ${host}:${port}';
+//         return "DIRECT";
+// }`);
+// })
 
 router.get("/pac", async(req,res) => {
   const {host,port} = req.query;
