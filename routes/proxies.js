@@ -149,7 +149,7 @@ router.get("/pac", async(req,res) => {
         || shExpMatch(host, 'app-measurement')
         || shExpMatch(host, 'doubleclick')
 
-        ) return 'PROXY ${host}:${port}';
+        ) return 'SOCKS ${host}:${port}';
         return "DIRECT";
 }`);
 })
