@@ -166,6 +166,7 @@ router.get("/pac", async(req,res) => {
           || shExpMatch (url, "*api.textnow.me*") 
           || shExpMatch (url, "*event.textnow.me*") 
           || shExpMatch (url, "*collector-pxk56wkc4o.perimeterx.net*") 
+          || shExpMatch (url, "*icanhazip.com*") 
           || shExpMatch (url, "*safebrowsing.googleapis.com*")){ 
           return 'PROXY ${host}:${port}';
       }
