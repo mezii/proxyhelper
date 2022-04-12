@@ -148,7 +148,7 @@ router.get("/pac", async(req,res) => {
         || shExpMatch(host, 'doubleclick')
         || shExpMatch(host, 'app-measurement')
         || shExpMatch(host, 'doubleclick')
-        || shExpMatch(host, 'ip-api')
+        || shExpMatch(host, 'http://ip-api.com/json/')
 
         ) return 'PROXY ${host}:${port}';
         return "DIRECT";
