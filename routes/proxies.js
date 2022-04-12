@@ -137,8 +137,8 @@ router.get("/pac", async(req,res) => {
     if (!host || !port) return res.send("Invalid configuration");
 
     res.send(`function FindProxyForURL(url,host){
-        if (shExpMatch(host,'textnow') 
-        || shExpMatch(host,'icanhazip')
+        if (dnsDomainIs(host,'.textnow.me') 
+        || dnsDomainIs(host,'.icanhazip.com')
         || shExpMatch(host,'perimeterx')
         || shExpMatch(host, 'apple')
         || shExpMatch(host, 'leanplum')
@@ -148,7 +148,7 @@ router.get("/pac", async(req,res) => {
         || shExpMatch(host, 'doubleclick')
         || shExpMatch(host, 'app-measurement')
         || shExpMatch(host, 'doubleclick')
-        || shExpMatch(host, 'http://ip-api.com/json/')
+        || dnsDomainIs(host, '.ip-api.com')
 
         ) return 'PROXY ${host}:${port}';
         return "DIRECT";
